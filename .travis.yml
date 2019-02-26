@@ -1,0 +1,6 @@
+sudo: false
+dist: xenial
+language: scala
+
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION run
