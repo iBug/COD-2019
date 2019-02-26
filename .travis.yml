@@ -3,6 +3,7 @@ dist: xenial
 language: scala
 
 script:
+  - sbt scalastyle
   - sbt ++$TRAVIS_SCALA_VERSION run
 
 cache:
