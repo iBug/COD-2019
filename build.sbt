@@ -30,9 +30,9 @@ name := "COD-2019 by iBug"
 
 version := "2019.2.26.0"
 
-scalaVersion := "2.11.12"
+scalaVersion := "2.12.8"
 
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+crossScalaVersions := Seq("2.11.12", "2.12.8")
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots"),
