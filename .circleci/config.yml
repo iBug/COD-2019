@@ -36,4 +36,6 @@ jobs:
           command: |
             find target/ -name '*.v' -print0 | xargs -0r tar zcf target/verilog.tar.gz
       - store_artifacts:
+          path: target/scalastyle-result.xml
+      - store_artifacts:
           path: target/verilog.tar.gz
