@@ -9,7 +9,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dep-{{ checksum "build.sbt" }}
+            - dep-{{ .Branch }}
+            - dep-master
       - run:
           name: Lint code
           command: sbt scalastyle
@@ -26,4 +27,10 @@ jobs:
           paths:
             - ~/.sbt
             - ~/.ivy2/cache
-          key: dep-{{ checksum "build.sbt" }}
+          key: dep-{{ .Branch }}
+      - run:
+          name: Tar Artifacts
+          command: |
+            find target/ '*.v' -print0 | xargs -0r tar zcf target/verilog.tar.gz
+      - store_artifacts:
+          path: target/verilog.tar.gz
