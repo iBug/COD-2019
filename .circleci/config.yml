@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    environment:
+      JVM_OPTS: -Xmx2048m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dep-{{ checksum "build.sbt" }}
+      - run:
+          name: Lint code
+          command: sbt scalastyle
+      - run:
+          name: Run Chisel
+          command: sbt run
+      - run:
+          name: Clear bad cache
+          command: |
+            rm -fv $HOME/.ivy2/.sbt.ivy.lock
+            find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+            find $HOME/.sbt -name "*.lock" -print -delete
+      - save_cache:
+          paths:
+            - ~/.sbt
+            - ~/.ivy2/cache
+          key: dep-{{ checksum "build.sbt" }}
