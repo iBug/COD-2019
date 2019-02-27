@@ -12,13 +12,10 @@ jobs:
             - dep-{{ .Branch }}
             - dep-master
       - run:
-          name: Lint code
-          command: sbt scalastyle
+          name: Update SBT Dependency
+          command: sbt update
       - run:
-          name: Run Chisel
-          command: sbt run
-      - run:
-          name: Clear bad cache
+          name: Cleanup cache
           command: |
             rm -fv $HOME/.ivy2/.sbt.ivy.lock
             find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
@@ -28,6 +25,12 @@ jobs:
             - ~/.sbt
             - ~/.ivy2/cache
           key: dep-{{ .Branch }}
+      - run:
+          name: Lint code
+          command: sbt scalastyle
+      - run:
+          name: Run Chisel
+          command: sbt run
       - run:
           name: Tar Artifacts
           command: |
