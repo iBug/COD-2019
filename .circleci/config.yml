@@ -31,6 +31,6 @@ jobs:
       - run:
           name: Tar Artifacts
           command: |
-            find target/ '*.v' -print0 | xargs -0r tar zcf target/verilog.tar.gz
+            find target/ -name '*.v' -print0 | xargs -0r tar zcf target/verilog.tar.gz
       - store_artifacts:
           path: target/verilog.tar.gz
