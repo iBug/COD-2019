@@ -5,14 +5,14 @@ import chisel3.util._
 
 class Adder(w: Int) extends Module {
   val io = IO(new Bundle {
-    val a = Input(UInt(w.W))
-    val b = Input(UInt(w.W))
-    val s = Output(UInt(w.W))
-    val cin = Input(UInt(1.W))
-    val cout = Output(UInt(1.W))
+    val A = Input(UInt(w.W))
+    val B = Input(UInt(w.W))
+    val Sum = Output(UInt(w.W))
+    val Cin = Input(UInt(1.W))
+    val Cout = Output(UInt(1.W))
   })
 
-  val sum = Cat(0.U, io.a) + Cat(0.U, io.b) + Cat(0.U(w.W), cin)
-  io.cout := sum(w)
-  io.s := sum(w - 1, 0)
+  val sum = Cat(0.U, io.A) + Cat(0.U, io.B) + Cat(0.U(w.W), io.Cin)
+  io.Cout := sum(w)
+  io.Sum := sum(w - 1, 0)
 }

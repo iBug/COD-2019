@@ -9,5 +9,5 @@ object Main extends App {
     new_args ++= Array("--target-dir", "target")
   }
 
-  chisel3.Driver.execute(new_args, () => new Adder)
+  chisel3.Driver.execute(new_args, () => new Adder(32))
 }
