@@ -29,13 +29,18 @@ jobs:
           name: Lint code
           command: sbt scalastyle
       - run:
-          name: Run Chisel
-          command: sbt run
+          name: Run Tests
+          command: sbt "test:runMain cod.TestMain"
+      - run:
+          name: Elaborate Design
+          command: sbt "runMain cod.Main"
       - run:
           name: Tar Artifacts
           command: |
             find target/ -name '*.v' -print0 | xargs -0r tar zcf target/verilog.tar.gz
       - store_artifacts:
           path: target/scalastyle-result.xml
+      - store_artifacts:
+          path: test_run_dir
       - store_artifacts:
           path: target/verilog.tar.gz
