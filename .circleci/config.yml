@@ -29,11 +29,8 @@ jobs:
           name: Lint code
           command: sbt scalastyle
       - run:
-          name: Run Tests
-          command: sbt "test:runMain cod.TestMain"
-      - run:
-          name: Elaborate Design
-          command: sbt "runMain cod.Main"
+          name: Run Chisel
+          command: sbt "test:runMain cod.TestMain" "runMain cod.Main"
       - run:
           name: Tar Artifacts
           command: |
