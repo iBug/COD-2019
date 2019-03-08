@@ -10,4 +10,7 @@ object Main extends App {
   }
 
   chisel3.Driver.execute(Args, () => new Adder(32))
+  chisel3.Driver.execute(Args, () => new And(32))
+  chisel3.Driver.execute(Args, () => new Or(32))
+  chisel3.Driver.execute(Args, () => new Xor(32))
 }
