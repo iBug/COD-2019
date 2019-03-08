@@ -16,3 +16,16 @@ class Adder(w: Int) extends Module {
   io.Cout := sum(w)
   io.Sum := sum(w - 1, 0)
 }
+
+class Multiplier(w: Int) extends Module {
+  val io = IO(new Bundle {
+    val A = Input(UInt(w.W))
+    val B = Input(UInt(w.W))
+    val Result = Output(UInt(w.W))
+    val ResultUpper = Output(UInt(w.W))
+  })
+
+  val result = io.A * io.B
+  io.Result := result(w - 1, 0)
+  io.ResultUpper := result(2 * w - 1, w)
+}
