@@ -13,6 +13,15 @@ class And(w: Int) extends Module {
   io.S := io.A & io.B
 }
 
+object And {
+  def apply(w: Int, a: UInt, b: UInt) = {
+    val m = Module(new And(w)).io
+    m.A := a
+    m.B := b
+    m.S
+  }
+}
+
 class Or(w: Int) extends Module {
   val io = IO(new Bundle {
     val A = Input(UInt(w.W))
@@ -21,6 +30,15 @@ class Or(w: Int) extends Module {
   })
 
   io.S := io.A | io.B
+}
+
+object Or {
+  def apply(w: Int, a: UInt, b: UInt) = {
+    val m = Module(new Or(w)).io
+    m.A := a
+    m.B := b
+    m.S
+  }
 }
 
 class Xor(w: Int) extends Module {
@@ -33,6 +51,15 @@ class Xor(w: Int) extends Module {
   io.S := io.A ^ io.B
 }
 
+object Xor {
+  def apply(w: Int, a: UInt, b: UInt) = {
+    val m = Module(new Xor(w)).io
+    m.A := a
+    m.B := b
+    m.S
+  }
+}
+
 class ALU(w: Int) extends Module {
   val io = IO(new Bundle {
     val A = Input(UInt(w.W))
@@ -43,21 +70,15 @@ class ALU(w: Int) extends Module {
 
   val adder = Module(new Adder(w)).io
   val multer = Module(new Multiplier(w)).io
-  val and = Module(new And(w)).io
-  val or = Module(new Or(w)).io
-  val xor = Module(new Xor(w)).io
+  val andS = And(w, io.A, io.B)
+  val orS = Or(w, io.A, io.B)
+  val xorS = Xor(w, io.A, io.B)
 
   adder.A := io.A
   multer.A := io.A
-  and.A := io.A
-  or.A := io.A
-  xor.A := io.A
 
   adder.B := io.B
   multer.B := io.B
-  and.B := io.B
-  or.B := io.B
-  xor.B := io.B
 
   // Special handling
   adder.Cin := 0.U(1.W)
@@ -65,9 +86,9 @@ class ALU(w: Int) extends Module {
   io.S := MuxLookup(io.select, 0.U(w.W), Array(
     0.U -> adder.Sum,
     1.U -> multer.Result,
-    2.U -> and.S,
-    3.U -> or.S,
-    4.U -> xor.S,
+    2.U -> andS,
+    3.U -> orS,
+    4.U -> xorS,
     5.U -> (~io.A)
   ))
 }
