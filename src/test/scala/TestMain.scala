@@ -34,4 +34,7 @@ object ALUTests extends App {
   iotesters.Driver.execute(args, () => new Accumulator(32)) {
     c => new AccumulatorTester(c)
   }
+  iotesters.Driver.execute(args, () => new Fibonacci(32)) {
+    c => new FibonacciTester(c)
+  }
 }
