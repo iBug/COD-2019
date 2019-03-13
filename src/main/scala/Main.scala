@@ -2,6 +2,7 @@ import chisel3._
 import chisel3.util._
 
 import alu.ALU
+import alu.util.Fibonacci
 
 object Main extends App {
   var Args: Array[String] = args
@@ -9,5 +10,10 @@ object Main extends App {
     Args ++= Array("--target-dir", "target")
   }
 
-  chisel3.Driver.execute(Args, () => new ALU(6, 3, 3))
+  ALUMain.main(Args)
+}
+
+object ALUMain extends App {
+  chisel3.Driver.execute(args, () => new ALU(6, 3, 3))
+  chisel3.Driver.execute(args, () => new Fibonacci(8))
 }
