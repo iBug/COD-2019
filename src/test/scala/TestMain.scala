@@ -27,4 +27,7 @@ object TestMain extends App {
   iotesters.Driver.execute(args, () => new Comparator(32)) {
     c => new ComparatorTester(c)
   }
+  iotesters.Driver.execute(args, () => new Accumulator(32)) {
+    c => new AccumulatorTester(c)
+  }
 }
