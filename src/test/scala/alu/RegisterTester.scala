@@ -4,7 +4,6 @@ import chisel3._
 import chisel3.util._
 import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
-import scala.util.Random
 
 class RegisterTester(c: Register) extends PeekPokeTester(c) {
   expect(c.io.out, 0)

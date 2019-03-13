@@ -3,6 +3,7 @@ import chisel3.util._
 import chisel3.iotesters
 
 import alu._
+import alu.util._
 
 object TestMain extends App {
   // ALU Tests
@@ -20,5 +21,10 @@ object TestMain extends App {
   }
   iotesters.Driver.execute(args, () => new Register(32)) {
     c => new RegisterTester(c)
+  }
+
+  // ALU Utility Tests
+  iotesters.Driver.execute(args, () => new Comparator(32)) {
+    c => new ComparatorTester(c)
   }
 }
