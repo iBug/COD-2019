@@ -12,10 +12,6 @@ object ALUSelect {
   val NOT = 5.U
 }
 
-object ALU extends App {
-  chisel3.Driver.execute(args, () => new ALU(6, 3, 3))
-}
-
 class ALU(wData: Int, wSelect: Int, wFlags: Int) extends Module {
   val io = IO(new Bundle {
     val A = Input(UInt(wData.W))
