@@ -9,5 +9,5 @@ object Main extends App {
     Args ++= Array("--target-dir", "target")
   }
 
-  chisel3.Driver.execute(Args, () => new ALU(32))
+  // chisel3.Driver.execute(Args, () => new ALU(32))
 }
