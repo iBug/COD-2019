@@ -41,3 +41,8 @@ jobs:
           path: test_run_dir
       - store_artifacts:
           path: target/verilog.tar.gz
+
+general:
+  branches:
+    only:
+      - master
