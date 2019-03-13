@@ -18,4 +18,7 @@ object TestMain extends App {
   iotesters.Driver.execute(args, () => new Adder(32)) {
     c => new AdderTester(c)
   }
+  iotesters.Driver.execute(args, () => new Register(32)) {
+    c => new RegisterTester(c)
+  }
 }
