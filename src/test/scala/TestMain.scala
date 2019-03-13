@@ -6,6 +6,10 @@ import alu._
 import alu.util._
 
 object TestMain extends App {
+  ALUTests.main(args)
+}
+
+object ALUTests extends App {
   // ALU Tests
   iotesters.Driver.execute(args, () => new And(32)) {
     c => new AndTester(c)
