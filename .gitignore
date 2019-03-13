@@ -1,0 +1,17 @@
+*.cache
+*.runs
+*.sim
+*.ip_user_files
+
+*.log
+*.jou
+
+/vivado_pid*
+
+# Everything start with a dot except Git stuff
+.*
+!.gitignore
+!.gitattribute
+
+# Stupid stuff
+*webtalk*
