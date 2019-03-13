@@ -2,7 +2,7 @@ package alu.util
 
 import chisel3._
 import chisel3.util._
-import alu.Register
+import alu.{ALU, ALUSelect, Register}
 
 class Accumulator(w: Int) extends Module {
   val io = IO(new Bundle {
@@ -10,5 +10,14 @@ class Accumulator(w: Int) extends Module {
     val s = Output(UInt(w.W))
   })
 
-  io.s := Register(w, io.x + io.s, true.B)
+  val alu = Module(new ALU(w, 3, 3)).io
+  val reg = Module(new Register(w)).io
+  io.s := reg.out
+
+  alu.A := io.x
+  alu.B := reg.out
+  alu.S := ALUSelect.ADD
+  alu.F := DontCare
+  reg.in := alu.Y
+  reg.enable := true.B
 }
