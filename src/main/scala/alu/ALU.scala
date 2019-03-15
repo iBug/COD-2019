@@ -30,7 +30,7 @@ class ALU(wData: Int, wSelect: Int, wFlags: Int) extends Module {
 
   // Result flags
   val addCarry = adder.Cout
-  val subCarry = ~suber.Cout
+  val subCarry = suber.Cout
   val addOverflowChecker = Cat(io.A(wData - 1), io.B(wData - 1), adder.Sum(wData - 1))
   val subOverflowChecker = Cat(io.A(wData - 1), io.B(wData - 1), suber.Sum(wData - 1))
   val addOverflow = (addOverflowChecker === 1.U) || (addOverflowChecker === 6.U)
