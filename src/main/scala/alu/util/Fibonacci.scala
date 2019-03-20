@@ -16,11 +16,11 @@ class Fibonacci(w: Int) extends Module {
   val r1 = RegInit(io.f1)
   io.fn := r1
 
-  alu.a := r0
-  alu.b := r1
-  alu.s := ALUSelect.ADD
-  alu.f := DontCare
+  alu.A := r0
+  alu.B := r1
+  alu.S := ALUSelect.ADD
+  alu.F := DontCare
 
   r0 := r1
-  r1 := alu.y
+  r1 := alu.Y
 }

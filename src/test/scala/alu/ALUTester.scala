@@ -7,10 +7,10 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 
 class ALUTester(c: ALU) extends PeekPokeTester(c) {
-  poke(c.io.a, 31)
-  poke(c.io.b, 1)
-  poke(c.io.s, ALUSelect.ADD)
+  poke(c.io.A, 31)
+  poke(c.io.B, 1)
+  poke(c.io.S, ALUSelect.ADD)
   step(1)
-  expect(c.io.y, 32)
-  expect(c.io.f, 10) // Overflow, Sign
+  expect(c.io.Y, 32)
+  expect(c.io.F, 10) // Overflow, Sign
 }
