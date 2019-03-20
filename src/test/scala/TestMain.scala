@@ -26,6 +26,9 @@ object ALUTests extends App {
   iotesters.Driver.execute(args, () => new Register(32)) {
     c => new RegisterTester(c)
   }
+  iotesters.Driver.execute(args, () => new ALU(6, 3, 4)) {
+    c => new ALUTester(c)
+  }
 
   // ALU Utility Tests
   iotesters.Driver.execute(args, () => new Comparator(32)) {

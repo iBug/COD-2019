@@ -14,10 +14,10 @@ class Accumulator(w: Int) extends Module {
   val reg = Module(new Register(w)).io
   io.s := reg.out
 
-  alu.A := io.x
-  alu.B := reg.out
-  alu.S := ALUSelect.ADD
-  alu.F := DontCare
-  reg.in := alu.Y
+  alu.a := io.x
+  alu.b := reg.out
+  alu.s := ALUSelect.ADD
+  alu.f := DontCare
+  reg.in := alu.y
   reg.enable := true.B
 }
