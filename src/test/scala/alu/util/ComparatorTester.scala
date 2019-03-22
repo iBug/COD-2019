@@ -24,8 +24,8 @@ class ComparatorTester(c: Comparator) extends PeekPokeTester(c) {
   expect(c.io.sg, 1)
   expect(c.io.sl, 0)
 
-  poke(c.io.x, -123)
-  poke(c.io.y, -121)
+  poke(c.io.x, Int.MaxValue - 123 + 1)
+  poke(c.io.y, Int.MaxValue - 121 + 1)
   step(1)
   expect(c.io.eq, 0)
   expect(c.io.ug, 0)

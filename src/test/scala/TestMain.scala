@@ -6,7 +6,12 @@ import alu._
 import alu.util._
 
 object TestMain extends App {
-  ALUTests.main(args)
+  var Args: Array[String] = args
+  if (!(Args contains "--backend-name")) {
+    Args ++= Array("--backend-name", "firrtl", "-fiwv")
+  }
+
+  ALUTests.main(Args)
 }
 
 object ALUTests extends App {

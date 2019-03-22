@@ -7,22 +7,22 @@ import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 
 class AndTester(c: And) extends PeekPokeTester(c) {
-  poke(c.io.A, 0x12345678)
-  poke(c.io.B, 0xFEDCBA90)
+  poke(c.io.A, 0x12345678L)
+  poke(c.io.B, 0xFEDCBA90L)
   step(1)
   expect(c.io.S, 0x12141210L)
 }
 
 class OrTester(c: Or) extends PeekPokeTester(c) {
-  poke(c.io.A, 0x12345678)
-  poke(c.io.B, 0xFEDCBA90)
+  poke(c.io.A, 0x12345678L)
+  poke(c.io.B, 0xFEDCBA90L)
   step(1)
   expect(c.io.S, 0xFEFCFEF8L)
 }
 
 class XorTester(c: Xor) extends PeekPokeTester(c) {
-  poke(c.io.A, 0x12345678)
-  poke(c.io.B, 0xFEDCBA90)
+  poke(c.io.A, 0x12345678L)
+  poke(c.io.B, 0xFEDCBA90L)
   step(1)
   expect(c.io.S, 0xECE8ECE8L)
 }
