@@ -32,15 +32,18 @@ jobs:
           name: Run Chisel
           command: sbt "test:runMain TestMain" "runMain Main"
       - run:
-          name: Tar Artifacts
+          name: Collect Artifacts
           command: |
             find target/ -name '*.v' -print0 | xargs -0r tar zcf target/verilog.tar.gz
+            mkdir -p waveforms && find test_run_dir/ -name '*.vcd' -print0 | xargs -0rI % mv % waveforms/ && tar zcf target/waveforms.tar.gz waveforms
       - store_artifacts:
           path: target/scalastyle-result.xml
       - store_artifacts:
           path: test_run_dir
       - store_artifacts:
           path: target/verilog.tar.gz
+      - store_artifacts:
+          path: target/waveforms.tar.gz
 
 general:
   branches:
