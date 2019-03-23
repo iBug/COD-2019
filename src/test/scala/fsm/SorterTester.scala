@@ -17,8 +17,12 @@ class SorterTester(val c: Sorter4) extends PeekPokeTester(c) {
   expect(d.s1, 3)
   expect(d.s2, 2)
   expect(d.s3, 5)
+  expect(d.done, false)
 
-  step(4)
+  step(2)
+  expect(d.done, false)
+
+  step(2)
   expect(d.done, true)
   expect(d.s0, 2)
   expect(d.s1, 3)
