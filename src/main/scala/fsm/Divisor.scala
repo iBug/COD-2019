@@ -22,7 +22,7 @@ class Divisor(val w: Int) extends Module {
   val n = RegInit(w.U(w.W))
   io.done := n === 0.U
 
-  when (n === 0.U) {
+  when (io.error || n === 0.U) {
     n := 0.U
   } .otherwise {
     val t = (r << 1) | (io.x(n - 1.U) =/= 0.U)

@@ -17,6 +17,17 @@ class DivisorTester(val c: Divisor) extends PeekPokeTester(c) {
   expect(d.r, 1)
   expect(d.done, true)
 
+  poke(d.x, 107)
+  poke(d.y, 9)
+
+  reset(1)
+  expect(d.error, false)
+  step(c.w)
+  expect(d.q, 11)
+  expect(d.r, 8)
+  expect(d.done, true)
+
+  // Test error
   poke(d.y, 0)
   reset(1)
   expect(d.error, true)
