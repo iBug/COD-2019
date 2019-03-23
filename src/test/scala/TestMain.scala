@@ -8,7 +8,7 @@ import alu.util._
 object TestMain extends App {
   var Args: Array[String] = args
   if (!(Args contains "--backend-name")) {
-    Args ++= Array("--backend-name", "firrtl", "-fiwv")
+    Args ++= Array("--backend-name", "treadle", "-tgvo", "on")
   }
 
   ALUTests.main(Args)
