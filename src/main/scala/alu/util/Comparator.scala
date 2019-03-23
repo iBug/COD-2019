@@ -2,6 +2,7 @@ package alu.util
 
 import chisel3._
 import chisel3.util._
+import alu.{ALU, ALUSelect}
 
 class Comparator(w: Int) extends Module {
   val io = IO(new Bundle {
@@ -14,9 +15,14 @@ class Comparator(w: Int) extends Module {
     val sl = Output(Bool())
   })
 
-  io.eq := io.x === io.y
-  io.ug := io.x > io.y
-  io.ul := io.x < io.y
-  io.sg := io.x.asSInt > io.y.asSInt
-  io.sl := io.x.asSInt < io.y.asSInt
+  val alu = Module(new ALU(w, 3, 4)).io
+  alu.A := io.x
+  alu.B := io.y
+  alu.S := ALUSelect.SUB
+
+  io.eq := alu.F(0)
+  io.ug := ~io.eq & ~alu.F(2) // Zero + ~Carry
+  io.ul := ~io.eq & alu.F(2) // Zero + Carry
+  io.sg := ~io.eq & (~alu.F(1) ^ alu.F(3))
+  io.sl := ~io.eq & (alu.F(1) ^ alu.F(3))
 }
