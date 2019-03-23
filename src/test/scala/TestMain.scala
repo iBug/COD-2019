@@ -15,6 +15,16 @@ object TestMain extends App {
   FSMTests.main(Args)
 }
 
+object TestAll extends App {
+  var Args: Array[String] = args
+  if (!(Args contains "--backend-name")) {
+    Args ++= Array("--backend-name", "treadle", "-tgvo", "on")
+  }
+
+  ALUTests.main(Args)
+  FSMTests.main(Args)
+}
+
 object ALUTests extends App {
   // ALU Tests
   iotesters.Driver.execute(args, () => new And(32)) { c => new AndTester(c) }

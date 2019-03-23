@@ -4,7 +4,7 @@ language: scala
 
 script:
   - sbt scalastyle
-  - sbt ++$TRAVIS_SCALA_VERSION "test:runMain TestMain" "runMain Main"
+  - sbt ++$TRAVIS_SCALA_VERSION "test:runMain TestAll" "runMain Main"
 
 cache:
   directories:

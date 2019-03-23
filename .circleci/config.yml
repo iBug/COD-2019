@@ -30,7 +30,7 @@ jobs:
           command: sbt scalastyle
       - run:
           name: Run Chisel
-          command: sbt "test:runMain TestMain" "runMain Main"
+          command: sbt "test:runMain TestAll" "runMain Main"
       - run:
           name: Collect Artifacts
           command: |
