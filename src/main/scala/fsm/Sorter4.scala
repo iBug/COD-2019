@@ -39,42 +39,47 @@ class Sorter4(val w: Int) extends Module {
   val r1 = RegInit(io.x1)
   val r2 = RegInit(io.x2)
   val r3 = RegInit(io.x3)
+  io.s0 := r0
+  io.s1 := r1
+  io.s2 := r2
+  io.s3 := r3
   io.done := state === 3.U
 
   val p0 = Module(new Sorter2(w)).io
   val p1 = Module(new Sorter2(w)).io
 
-  switch (state) {
-    is (0.U) {
-      p0.x0 := r0
-      p0.x1 := r1
-      p1.x0 := r2
-      p1.x1 := r3
-      r0 := p0.s0
-      r1 := p0.s1
-      r2 := p1.s0
-      r3 := p1.s1
-      state := 1.U(2.W)
-    }
-    is (1.U) {
-      p0.x0 := r0
-      p0.x1 := r2
-      p1.x0 := r1
-      p1.x1 := r3
-      r0 := p0.s0
-      r1 := p1.s0
-      r2 := p0.s1
-      r3 := p1.s1
-      state := 2.U(2.W)
-    }
-    is (2.U) {
-      p0.x0 := r1
-      p0.x1 := r2
-      r0 := r0
-      r1 := p0.s0
-      r2 := p0.s1
-      r3 := r3
-      state := 3.U(2.W)
-    }
+  when (state === 0.U) {
+    p0.x0 := r0
+    p0.x1 := r1
+    p1.x0 := r2
+    p1.x1 := r3
+    r0 := p0.s0
+    r1 := p0.s1
+    r2 := p1.s0
+    r3 := p1.s1
+    state := 1.U(2.W)
+  } .elsewhen (state === 1.U) {
+    p0.x0 := r0
+    p0.x1 := r2
+    p1.x0 := r1
+    p1.x1 := r3
+    r0 := p0.s0
+    r1 := p1.s0
+    r2 := p0.s1
+    r3 := p1.s1
+    state := 2.U(2.W)
+  } .elsewhen (state === 2.U) {
+    p0.x0 := r1
+    p0.x1 := r2
+    p1.x0 := 0.U(w.W)
+    p1.x1 := 0.U(w.W)
+    r1 := p0.s0
+    r2 := p0.s1
+    state := 3.U(2.W)
+  } .otherwise {
+    p0.x0 := 0.U(w.W)
+    p0.x1 := 0.U(w.W)
+    p1.x0 := 0.U(w.W)
+    p1.x1 := 0.U(w.W)
   }
 }
