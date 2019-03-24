@@ -8,11 +8,10 @@ import scala.util.Random
 
 class DivisorTester(val c: Divisor) extends PeekPokeTester(c) {
   val d = c.io
-  val r = Random
 
   for (n <- 0 until 10) {
-    val x = r.nextInt(101)
-    val y = r.nextInt(11)
+    val x = Random.nextInt(256)
+    val y = 1 + Random.nextInt(16)
     poke(d.x, x)
     poke(d.y, y)
 

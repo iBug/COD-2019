@@ -8,10 +8,9 @@ import scala.util.Random
 
 class SorterTester(val c: Sorter4) extends PeekPokeTester(c) {
   val d = c.io
-  val r = scala.util.Random
 
   for (n <- 0 until 10) {
-    val x = List.tabulate(4)(e => r.nextInt(100))
+    val x = List.tabulate(4)(e => Random.nextInt(100))
     poke(d.x0, x(0))
     poke(d.x1, x(1))
     poke(d.x2, x(2))
