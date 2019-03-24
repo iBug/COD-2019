@@ -19,7 +19,7 @@ class Divisor(val w: Int) extends Module {
   io.q := q
   io.r := r
 
-  val n = RegInit(w.U(w.W))
+  val n = RegInit(w.U(log2Ceil(w + 1).W))
   io.done := n === 0.U
 
   when (io.error || n === 0.U) {

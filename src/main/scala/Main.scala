@@ -23,4 +23,5 @@ object ALUMain extends App {
 
 object FSMMain extends App {
   chisel3.Driver.execute(args, () => new Sorter4(3))
+  chisel3.Driver.execute(args, () => new Divisor(8))
 }
