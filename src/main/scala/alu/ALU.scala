@@ -24,9 +24,10 @@ class ALU(wData: Int, wSelect: Int, wFlags: Int) extends Module {
   // Internal results
   val adder = Module(new Adder(wData)).io
   val suber = Module(new Subtractor(wData)).io
-  val andS = And(wData, io.A, io.B)
-  val orS = Or(wData, io.A, io.B)
-  val xorS = Xor(wData, io.A, io.B)
+  val andS = io.A & io.B
+  val orS = io.A | io.B
+  val xorS = io.A ^ io.B
+  val notS = ~io.A
 
   // Result flags
   val addCarry = adder.Cout
@@ -52,7 +53,7 @@ class ALU(wData: Int, wSelect: Int, wFlags: Int) extends Module {
     ALUSelect.AND -> andS,
     ALUSelect.OR -> orS,
     ALUSelect.XOR -> xorS,
-    ALUSelect.NOT -> (~io.A)
+    ALUSelect.NOT -> notS
   ))
   io.F := Cat(
     // Overflow flag
@@ -68,10 +69,7 @@ class ALU(wData: Int, wSelect: Int, wFlags: Int) extends Module {
     )),
 
     // Sign flag
-    MuxLookup(io.S, 0.U(1.W), Array(
-      ALUSelect.ADD -> flagSign,
-      ALUSelect.SUB -> flagSign
-    )),
+    flagSign,
 
     // Zero flag - any operation should have this enabled
     flagZero
