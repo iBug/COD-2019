@@ -23,6 +23,7 @@ module Divide(
             n <= 8;
             q <= 0;
             r <= 0;
+        end else if (done) begin
         end else begin
             n <= nextN;
             q <= nextQ;
