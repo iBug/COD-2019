@@ -12,7 +12,7 @@ object Main extends App {
     Args ++= Array("--backend-name", "treadle", "-tgvo", "on")
   }
 
-  FSMTests.main(Args)
+  fsm.Tests.main(Args)
 }
 
 object TestAll extends App {
@@ -21,6 +21,6 @@ object TestAll extends App {
     Args ++= Array("--backend-name", "treadle", "-tgvo", "on")
   }
 
-  ALUTests.main(Args)
-  FSMTests.main(Args)
+  alu.Tests.main(Args)
+  fsm.Tests.main(Args)
 }

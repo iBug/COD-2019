@@ -4,7 +4,7 @@ import chisel3.iotesters
 
 import util._
 
-object ALUTests extends App {
+object Tests extends App {
   // ALU Tests
   iotesters.Driver.execute(args, () => new Adder(32)) { c => new AdderTester(c) }
   iotesters.Driver.execute(args, () => new Register(32)) { c => new RegisterTester(c) }
