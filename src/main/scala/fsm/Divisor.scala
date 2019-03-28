@@ -22,12 +22,13 @@ class Divisor(val w: Int) extends Module {
   val n = RegInit(w.U(log2Ceil(w + 1).W))
   io.done := n === 0.U
 
-  when (io.error || n === 0.U) {
+  when (io.error || io.done) {
     n := 0.U
   } .otherwise {
-    val t = (r << 1) | (io.x(n - 1.U) =/= 0.U)
-    r := Mux(t >= io.y, t - io.y, t)
-    q := Mux(t >= io.y, q | (1.U << (n - 1.U)), q)
+    val t: UInt = (r << 1) | io.x(n - 1.U)
+    val s: Bool = t >= io.y
+    r := Mux(s, t - io.y, t)
+    q := Mux(s, q | (1.U << (n - 1.U)), q)
     n := n - 1.U
   }
 }

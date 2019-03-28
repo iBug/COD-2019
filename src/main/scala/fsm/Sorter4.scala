@@ -13,12 +13,10 @@ class Sorter2(val w: Int) extends Module {
     val s1 = Output(UInt(w.W))
   })
 
-  val comp = Module(new Comparator(w)).io
-  comp.x := io.x0
-  comp.y := io.x1
+  val comp: Bool = io.x0 >= io.x1
 
-  io.s0 := Mux(~comp.ug, io.x0, io.x1)
-  io.s1 := Mux(comp.ug, io.x0, io.x1)
+  io.s0 := Mux(comp, io.x1, io.x0)
+  io.s1 := Mux(comp, io.x0, io.x1)
 }
 
 class Sorter4(val w: Int) extends Module {
@@ -43,7 +41,7 @@ class Sorter4(val w: Int) extends Module {
   io.s1 := r1
   io.s2 := r2
   io.s3 := r3
-  io.done := state === 3.U
+  io.done := (state === 3.U)
 
   val p0 = Module(new Sorter2(w)).io
   val p1 = Module(new Sorter2(w)).io
