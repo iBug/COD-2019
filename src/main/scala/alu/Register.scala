@@ -4,7 +4,7 @@ import chisel3._
 import chisel3.util._
 
 object Register {
-  def apply(w: Int, in: UInt, enable: Bool): Wire = {
+  def apply(w: Int, in: UInt, enable: Bool) = {
     val m = Module(new Register(w)).io
     m.in := in
     m.enable := enable
