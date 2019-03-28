@@ -1,12 +1,14 @@
-module Divide(
+module Divide
+#(parameter W = 8)
+(
     input clock, reset,
-    input [7:0] x, y,
-    output reg [7:0] q, r,
+    input [W - 1:0] x, y,
+    output reg [W - 1:0] q, r,
     output done, error
 );
-    reg [7:0] n;
-    wire [7:0] nextQ, nextR, nextN;
-    wire [7:0] t;
+    reg [W - 1:0] n;
+    wire [W - 1:0] nextQ, nextR, nextN;
+    wire [W - 1:0] t;
     wire s;
 
     assign done = n == 0;
@@ -20,7 +22,7 @@ module Divide(
 
     always @(posedge clock) begin
         if (reset) begin
-            n <= 8;
+            n <= W;
             q <= 0;
             r <= 0;
         end else if (done) begin
