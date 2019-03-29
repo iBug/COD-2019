@@ -3,7 +3,7 @@ package reg.util
 import chisel3._
 import chisel3.util._
 
-import reg.RegisterFile
+import reg._
 
 // Warning: display may not work as expected if (wd, wa) != (4, 3)
 class FIFO(val wData: Int, val wAddr: Int) extends Module {
@@ -25,8 +25,13 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
     Module(new FIFODisplay(wData, wAddr))
   }.io
 
-  val head = RegInit(0.U(wAddr.W))
-  val tail = RegInit(0.U(wAddr.W))
+  val push = Wire(Bool())
+  val pop = Wire(Bool())
+  push := (io.en_in && !io.full) || io.en_out
+  pop := io.en_out && !io.empty
+
+  val head = reg.Counter(wAddr, pop, false.B, 0.U)
+  val tail = reg.Counter(wAddr, push, false.B, 0.U)
   val out = RegInit(0.U(wData.W))
 
   io.empty := head === tail
@@ -36,7 +41,7 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
   r.ra0 := head
   r.wa0 := tail
   r.wd0 := io.in
-  r.we := io.en_in && !io.full
+  r.we := push
 
   // Send these signals to display helper
   display.head := head
@@ -45,12 +50,8 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
   display.data := r.rd1
   io.display := display.output
 
-  when (io.en_out && !io.empty) {
-    head := head + 1.U(wAddr.W)
+  when (pop) {
     out := r.rd0
-  }
-  when (r.we) {
-    tail := tail + 1.U(wAddr.W)
   }
 }
 
