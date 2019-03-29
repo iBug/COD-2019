@@ -4,6 +4,8 @@ import chisel3.util._
 import alu.ALU
 import alu.util._
 import fsm._
+import reg._
+import reg.util.FIFO
 
 object Main extends App {
   var Args: Array[String] = args
@@ -13,6 +15,7 @@ object Main extends App {
 
   ALUMain.main(Args)
   FSMMain.main(Args)
+  RegMain.main(Args)
 }
 
 object ALUMain extends App {
@@ -24,4 +27,8 @@ object ALUMain extends App {
 object FSMMain extends App {
   chisel3.Driver.execute(args, () => new Sorter4(3))
   chisel3.Driver.execute(args, () => new Divisor(8))
+}
+
+object RegMain extends App {
+  chisel3.Driver.execute(args, () => new FIFO(4, 3))
 }

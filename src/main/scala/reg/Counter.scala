@@ -14,9 +14,9 @@ class Counter(val w: Int) extends Module {
   val q = RegInit(0.U(w.W))
   io.q := q
 
-  when (pe) {
+  when (io.pe) {
     q := io.d
-  } .elsewhen (ce) {
+  } .elsewhen (io.ce) {
     q := q + 1.U
   }
 }
