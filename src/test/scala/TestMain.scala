@@ -2,9 +2,9 @@ import chisel3._
 import chisel3.util._
 import chisel3.iotesters
 
-import alu._
-import alu.util._
-import fsm._
+import alu.Tests
+import fsm.Tests
+import reg.Tests
 
 object Main extends App {
   var Args: Array[String] = args
@@ -12,7 +12,7 @@ object Main extends App {
     Args ++= Array("--backend-name", "treadle", "-tgvo", "on")
   }
 
-  fsm.Tests.main(Args)
+  reg.Tests.main(Args)
 }
 
 object TestAll extends App {
@@ -23,4 +23,5 @@ object TestAll extends App {
 
   alu.Tests.main(Args)
   fsm.Tests.main(Args)
+  reg.Tests.main(Args)
 }
