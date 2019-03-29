@@ -27,7 +27,7 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
 
   val push = Wire(Bool())
   val pop = Wire(Bool())
-  push := (io.en_in && !io.full) || io.en_out
+  push := io.en_in && (!io.full || io.en_out)
   pop := io.en_out && !io.empty
 
   val head = reg.Counter(wAddr, pop, false.B, 0.U)
@@ -98,7 +98,7 @@ class FIFODisplay(val wData: Int, val wAddr: Int) extends Module {
   )
   io.output := Cat(sel, dp, seg)
 
-  dp := io.head =/= addr  // DP is inversed, same as SEG
+  dp := (addr =/= io.head) // DP is inversed, same as SEG
 
   when (c >= 9999.U) {
     c := 0.U
