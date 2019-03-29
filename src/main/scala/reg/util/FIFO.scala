@@ -34,19 +34,23 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
   io.out := out
 
   r.ra0 := head
-  r.wa0 := io.in
-  r.wd0 := tail
+  r.wa0 := tail
+  r.wd0 := io.in
   r.we := io.en_in && !io.full
 
   // Send these signals to display helper
+  display.head := head
+  display.tail := tail
   r.ra1 := display.addr
   display.data := r.rd1
   io.display := display.output
-  display.head := head
 
   when (io.en_out && !io.empty) {
     head := head + 1.U(wAddr.W)
     out := r.rd0
+  }
+  when (r.we) {
+    tail := tail + 1.U(wAddr.W)
   }
 }
 
@@ -61,13 +65,15 @@ object SegDisplay {
     6.U -> "b0100000".U(7.W),
     7.U -> "b0001111".U(7.W),
     8.U -> "b0000000".U(7.W),
-    9.U -> "b0000100".U(7.W)
+    9.U -> "b0000100".U(7.W),
+    15.U -> "b1111110".U(7.W)
   )
 }
 
 class FIFODisplay(val wData: Int, val wAddr: Int) extends Module {
   val io = IO(new Bundle {
     val head = Input(UInt(wAddr.W))
+    val tail = Input(UInt(wAddr.W))
 
     val addr = Output(UInt(wAddr.W))
     val data = Input(UInt(wData.W))
@@ -81,15 +87,21 @@ class FIFODisplay(val wData: Int, val wAddr: Int) extends Module {
   val dp = Wire(UInt(1.W))
 
   io.addr := addr
-  sel := 1.U << addr
-  seg := MuxLookup(io.data, 127.U(7.W), SegDisplay.D)
+  sel := ~(1.U << addr)
+  seg := Mux(Mux(io.tail >= io.head,
+      (addr >= io.head) && (addr < io.tail),
+      (addr < io.tail) || (addr >= io.head)
+    ),
+    MuxLookup(io.data, 127.U(7.W), SegDisplay.D),
+    127.U(7.W)
+  )
   io.output := Cat(sel, dp, seg)
 
-  dp := io.head === addr
+  dp := io.head =/= addr  // DP is inversed, same as SEG
 
   when (c >= 9999.U) {
     c := 0.U
-    addr := addr + 1.U
+    addr := addr + 1.U(wAddr.W)
   } .otherwise {
     c := c + 1.U
   }
