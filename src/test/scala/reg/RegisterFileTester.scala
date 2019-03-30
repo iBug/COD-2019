@@ -42,7 +42,7 @@ class RegisterFileTester(val c: RegisterFile) extends PeekPokeTester(c) {
 
   // Pass 3: random synchronous write
   poke(c.io.we, true)
-  for (n <- 0 until 8) {
+  for (n <- 0 until 32) {
     i = Random.nextInt(8)
     v(i) = Random.nextInt(16)
     poke(c.io.wa0, i)

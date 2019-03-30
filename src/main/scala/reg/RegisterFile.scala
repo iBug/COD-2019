@@ -3,6 +3,8 @@ package reg
 import chisel3._
 import chisel3.util._
 
+import alu.Register
+
 class RegisterFile(val wData: Int, val wAddr: Int) extends Module {
   val io = IO(new Bundle {
     val ra0 = Input(UInt(wAddr.W))
@@ -14,12 +16,13 @@ class RegisterFile(val wData: Int, val wAddr: Int) extends Module {
     val we = Input(Bool())
   })
 
-  val r = RegInit(VecInit(Seq.fill(1 << wAddr)(0.U(wData.W))))
+  val r = VecInit(Seq.fill(1 << wAddr)(Module(new Register(wData)).io))
 
-  io.rd0 := r(io.ra0)
-  io.rd1 := r(io.ra1)
-
-  when (io.we) {
-    r(io.wa0) := io.wd0
+  for (i <- 0 until (1 << wAddr)) {
+    r(i).in := io.wd0
+    r(i).enable := io.we && (io.wa0 === i.U)
   }
+
+  io.rd0 := r(io.ra0).out
+  io.rd1 := r(io.ra1).out
 }

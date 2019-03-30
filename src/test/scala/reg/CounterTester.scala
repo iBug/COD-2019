@@ -21,7 +21,7 @@ class CounterTester(val c: Counter) extends PeekPokeTester(c) {
   }
   poke(c.io.ce, false)
   step(u)
-  expect(c.io.q, u)
+  expect(c.io.q, u) // Check behavior on CE = false
 
   // Pass 2: set number test
   poke(c.io.pe, true)
