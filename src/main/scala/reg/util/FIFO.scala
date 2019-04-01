@@ -25,10 +25,8 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
     Module(new FIFODisplay(wData, wAddr))
   }.io
 
-  val push = Wire(Bool())
-  val pop = Wire(Bool())
-  push := io.en_in && (!io.full || io.en_out)
-  pop := io.en_out && !io.empty
+  val push: Bool = io.en_in && (!io.full || io.en_out)
+  val pop: Bool = io.en_out && !io.empty
 
   val head = reg.Counter(wAddr, pop, false.B, 0.U)
   val tail = reg.Counter(wAddr, push, false.B, 0.U)
@@ -89,10 +87,8 @@ class FIFODisplay(val wData: Int, val wAddr: Int) extends Module {
 
   io.addr := addr
   sel := ~(1.U << addr)
-  seg := Mux(Mux(io.tail >= io.head,
-      (addr >= io.head) && (addr < io.tail),
-      (addr < io.tail) || (addr >= io.head)
-    ),
+  seg := Mux(
+    ~((io.tail >= io.head) ^ ((addr >= io.head) && (addr < io.tail))),
     MuxLookup(io.data, 127.U(7.W), SegDisplay.D),
     127.U(7.W)
   )
