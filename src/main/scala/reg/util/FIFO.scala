@@ -87,8 +87,10 @@ class FIFODisplay(val wData: Int, val wAddr: Int) extends Module {
 
   io.addr := addr
   sel := ~(1.U << addr)
-  seg := Mux(
-    ~((io.tail >= io.head) ^ ((addr >= io.head) && (addr < io.tail))),
+  seg := Mux(Mux(io.tail >= io.head,
+      (addr >= io.head) && (addr < io.tail),
+      (addr < io.tail) || (addr >= io.head)
+    ),
     MuxLookup(io.data, 127.U(7.W), SegDisplay.D),
     127.U(7.W)
   )
