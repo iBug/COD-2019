@@ -6,12 +6,12 @@ import util._
 
 object Tests extends App {
   // ALU Tests
-  iotesters.Driver.execute(args, () => new Adder(32)) { c => new AdderTester(c) }
-  iotesters.Driver.execute(args, () => new Register(32)) { c => new RegisterTester(c) }
-  iotesters.Driver.execute(args, () => new ALU(6, 3, 4)) { c => new ALUTester(c) }
+  ALUTester.main(args)
+  AdderTester.main(args)
+  RegisterTester.main(args)
 
   // ALU Utility Tests
-  iotesters.Driver.execute(args, () => new Comparator(32)) { c => new ComparatorTester(c) }
-  iotesters.Driver.execute(args, () => new Accumulator(32)) { c => new AccumulatorTester(c) }
-  iotesters.Driver.execute(args, () => new Fibonacci(32)) { c => new FibonacciTester(c) }
+  ComparatorTester.main(args)
+  AccumulatorTester.main(args)
+  FibonacciTester.main(args)
 }

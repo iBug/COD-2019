@@ -6,6 +6,10 @@ import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 
+object DivisorTester extends App {
+  iotesters.Driver.execute(args, () => new Divisor(8)) { c => new DivisorTester(c) }
+}
+
 class DivisorTester(val c: Divisor) extends PeekPokeTester(c) {
   val d = c.io
 

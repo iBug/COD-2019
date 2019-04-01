@@ -5,6 +5,10 @@ import chisel3.util._
 import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 
+object AccumulatorTester extends App {
+  iotesters.Driver.execute(args, () => new Accumulator(32)) { c => new AccumulatorTester(c) }
+}
+
 class AccumulatorTester(c: Accumulator) extends PeekPokeTester(c) {
   poke(c.io.x, 123)
   step(1)

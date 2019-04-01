@@ -6,6 +6,10 @@ import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 
+object RegisterFileTester extends App {
+  iotesters.Driver.execute(args, () => new RegisterFile(4, 3)) { c => new RegisterFileTester(c) }
+}
+
 class RegisterFileTester(val c: RegisterFile) extends PeekPokeTester(c) {
   val v: Array[Int] = new Array[Int](8)
   var n: Int = 0

@@ -5,6 +5,10 @@ import chisel3.util._
 import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 
+object FibonacciTester extends App {
+  iotesters.Driver.execute(args, () => new Fibonacci(32)) { c => new FibonacciTester(c) }
+}
+
 class FibonacciTester(c: Fibonacci) extends PeekPokeTester(c) {
   poke(c.io.f0, 1)
   poke(c.io.f1, 1)

@@ -6,6 +6,10 @@ import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 
+object CounterTester extends App {
+  iotesters.Driver.execute(args, () => new Counter(4)) { c => new CounterTester(c) }
+}
+
 class CounterTester(val c: Counter) extends PeekPokeTester(c) {
   var u: Int = 0
   var s: Int = 0

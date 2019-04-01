@@ -5,6 +5,10 @@ import chisel3.util._
 import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 
+object ComparatorTester extends App {
+  iotesters.Driver.execute(args, () => new Comparator(32)) { c => new ComparatorTester(c) }
+}
+
 class ComparatorTester(c: Comparator) extends PeekPokeTester(c) {
   poke(c.io.x, 123)
   poke(c.io.y, 123)

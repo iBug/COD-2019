@@ -5,6 +5,10 @@ import chisel3.util._
 import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 
+object ALUTester extends App {
+  iotesters.Driver.execute(args, () => new ALU(6, 3, 4)) { c => new ALUTester(c) }
+}
+
 class ALUTester(c: ALU) extends PeekPokeTester(c) {
   poke(c.io.A, 31)
   poke(c.io.B, 1)

@@ -7,6 +7,10 @@ import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 import scala.collection.mutable.Queue
 
+object FIFOTester extends App {
+  iotesters.Driver.execute(args, () => new FIFO(4, 3)) { c => new FIFOTester(c) }
+}
+
 class FIFOTester(val c: FIFO) extends PeekPokeTester(c) {
   val q: Queue[Int] = new Queue[Int]()
   reset(1)

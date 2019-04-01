@@ -6,6 +6,10 @@ import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 
+object SorterTester extends App {
+  iotesters.Driver.execute(args, () => new Sorter4(8)) { c => new SorterTester(c) }
+}
+
 class SorterTester(val c: Sorter4) extends PeekPokeTester(c) {
   val d = c.io
 

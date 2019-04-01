@@ -6,6 +6,10 @@ import chisel3.iotesters._
 import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 
+object AdderTester extends App {
+  iotesters.Driver.execute(args, () => new Adder(32)) { c => new AdderTester(c) }
+}
+
 class AdderTester(c: Adder) extends PeekPokeTester(c) {
   poke(c.io.A, 0x1)
   poke(c.io.B, 0x2)
