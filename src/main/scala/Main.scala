@@ -30,5 +30,6 @@ object FSMMain extends App {
 }
 
 object RegMain extends App {
+  chisel3.Driver.execute(args, () => new RegisterFile(2, 4))
   chisel3.Driver.execute(args, () => new FIFO(4, 3))
 }
