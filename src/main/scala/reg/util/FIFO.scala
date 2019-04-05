@@ -15,18 +15,17 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
     val empty = Output(Bool())
     val full = Output(Bool())
     val display = Output(UInt((8 + (1 << wAddr)).W))
-
-    // 7-seg display helper
-    val CLK100MHZ = Input(Clock())
   })
 
   val r = Module(new RegisterFile(wData, wAddr)).io
-  val display = core.withClockAndReset(io.CLK100MHZ, false.B) {
-    Module(new FIFODisplay(wData, wAddr))
-  }.io
+  val display = Module(new FIFODisplay(wData, wAddr)).io
 
-  val push: Bool = io.en_in && (!io.full || io.en_out)
-  val pop: Bool = io.en_out && !io.empty
+  val push_en = RegInit(true.B)
+  val pop_en = RegInit(true.B)
+  val push: Bool = push_en && io.en_in && (!io.full || io.en_out)
+  val pop: Bool = pop_en && io.en_out && !io.empty
+  push_en := !io.en_in
+  pop_en := !io.en_out
 
   val head = reg.Counter(wAddr, pop, false.B, 0.U)
   val tail = reg.Counter(wAddr, push, false.B, 0.U)

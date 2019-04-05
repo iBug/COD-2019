@@ -18,12 +18,14 @@ class FIFOTester(val c: FIFO) extends PeekPokeTester(c) {
 
   // Pass 1: Insertion test
   poke(c.io.en_out, false)
-  poke(c.io.en_in, true)
   for (n <- 0 until 7) {
     val x = Random.nextInt(16)
     q.enqueue(x)
     poke(c.io.in, x)
+    poke(c.io.en_in, false)
     step(1)
+    poke(c.io.en_in, true)
+    step(2)
     expect(c.io.out, 0)
   }
   expect(c.io.empty, false)
@@ -40,20 +42,25 @@ class FIFOTester(val c: FIFO) extends PeekPokeTester(c) {
   poke(c.io.en_in, false)
 
   // Pass 3: Out test
-  poke(c.io.en_out, true)
   for (n <- 0 until 4) {
+    poke(c.io.en_out, false)
     step(1)
+    poke(c.io.en_out, true)
+    step(2)
     expect(c.io.out, q.dequeue)
     expect(c.io.full, false)
   }
 
   // Pass 4: Simultaneous I/O
-  poke(c.io.en_out, true)
-  poke(c.io.en_in, true)
   for (n <- 0 until 16) {
     val x = Random.nextInt(16)
     q.enqueue(x)
     poke(c.io.in, x)
+    poke(c.io.en_out, false)
+    poke(c.io.en_in, false)
+    step(1)
+    poke(c.io.en_out, true)
+    poke(c.io.en_in, true)
     step(1)
     expect(c.io.out, q.dequeue)
     expect(c.io.empty, false)
