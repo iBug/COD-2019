@@ -19,14 +19,14 @@ class FIFO(val wData: Int, val wAddr: Int, val withDisplay: Boolean = true) exte
 
   val r = Module(new RegisterFile(wData, wAddr)).io
 
-  val pop_en = RegNext(!io.en_out)
-  val push_en = RegNext(!io.en_in)
+  val pop_en = RegNext(!io.en_out, true.B)
+  val push_en = RegNext(!io.en_in, true.B)
   val pop: Bool = pop_en && io.en_out && !io.empty
   val push: Bool = push_en && io.en_in && (!io.full || pop)
 
   val head = reg.Counter(wAddr, pop, false.B, 0.U)
   val tail = reg.Counter(wAddr, push, false.B, 0.U)
-  val out = RegInit(0.U(wData.W))
+  val out = RegEnable(r.rd0, 0.U(wData.W), pop)
 
   io.empty := head === tail
   io.full := (tail + 1.U(wAddr.W)) === head
@@ -48,10 +48,6 @@ class FIFO(val wData: Int, val wAddr: Int, val withDisplay: Boolean = true) exte
   } else {
     r.ra1 := 0.U
     io.display := DontCare
-  }
-
-  when (pop) {
-    out := r.rd0
   }
 }
 
