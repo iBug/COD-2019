@@ -6,7 +6,7 @@ import chisel3.util._
 import reg._
 
 // Warning: display may not work as expected if (wd, wa) != (4, 3)
-class FIFO(val wData: Int, val wAddr: Int) extends Module {
+class FIFO(val wData: Int, val wAddr: Int, val withDisplay: Boolean = true) extends Module {
   val io = IO(new Bundle {
     val en_in = Input(Bool())
     val en_out = Input(Bool())
@@ -18,14 +18,11 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
   })
 
   val r = Module(new RegisterFile(wData, wAddr)).io
-  val display = Module(new FIFODisplay(wData, wAddr)).io
 
-  val push_en = RegInit(true.B)
-  val pop_en = RegInit(true.B)
-  val push: Bool = push_en && io.en_in && (!io.full || io.en_out)
+  val pop_en = RegNext(!io.en_out)
+  val push_en = RegNext(!io.en_in)
   val pop: Bool = pop_en && io.en_out && !io.empty
-  push_en := !io.en_in
-  pop_en := !io.en_out
+  val push: Bool = push_en && io.en_in && (!io.full || pop)
 
   val head = reg.Counter(wAddr, pop, false.B, 0.U)
   val tail = reg.Counter(wAddr, push, false.B, 0.U)
@@ -41,11 +38,17 @@ class FIFO(val wData: Int, val wAddr: Int) extends Module {
   r.we := push
 
   // Send these signals to display helper
-  display.head := head
-  display.tail := tail
-  r.ra1 := display.addr
-  display.data := r.rd1
-  io.display := display.output
+  if (withDisplay) {
+    val display = Module(new FIFODisplay(wData, wAddr)).io
+    display.head := head
+    display.tail := tail
+    r.ra1 := display.addr
+    display.data := r.rd1
+    io.display := display.output
+  } else {
+    r.ra1 := 0.U
+    io.display := DontCare
+  }
 
   when (pop) {
     out := r.rd0

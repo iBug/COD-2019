@@ -19,10 +19,6 @@ class Register(val w: Int, val init: Int = 0) extends Module {
     val enable = Input(Bool())
   })
 
-  val reg = RegInit(init.U(w.W))
+  val reg = RegEnable(io.in, init.U(w.W), io.enable)
   io.out := reg
-
-  when (io.enable) {
-    reg := io.in
-  }
 }

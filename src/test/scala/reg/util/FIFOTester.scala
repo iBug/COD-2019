@@ -8,7 +8,7 @@ import scala.util.Random
 import scala.collection.mutable.Queue
 
 object FIFOTester extends App {
-  iotesters.Driver.execute(args, () => new FIFO(4, 3)) { c => new FIFOTester(c) }
+  iotesters.Driver.execute(args, () => new FIFO(4, 3, withDisplay = false)) { c => new FIFOTester(c) }
 }
 
 class FIFOTester(val c: FIFO) extends PeekPokeTester(c) {
