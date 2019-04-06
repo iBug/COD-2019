@@ -254,24 +254,25 @@ module RegisterFile(
 endmodule
 module FIFODisplay(
   input         clock,
+  input         reset,
   input  [2:0]  io_head,
   input  [2:0]  io_tail,
   output [2:0]  io_addr,
   input  [3:0]  io_data,
   output [15:0] io_output
 );
-  reg [15:0] c; // @[FIFO.scala 82:18]
+  reg [15:0] c; // @[FIFO.scala 81:18]
   reg [31:0] _RAND_0;
-  reg [2:0] addr; // @[FIFO.scala 83:21]
+  reg [2:0] addr; // @[FIFO.scala 82:21]
   reg [31:0] _RAND_1;
-  wire [7:0] _T; // @[FIFO.scala 89:16]
-  wire [7:0] sel; // @[FIFO.scala 89:10]
-  wire  _T_2; // @[FIFO.scala 90:26]
-  wire  _T_3; // @[FIFO.scala 91:13]
-  wire  _T_4; // @[FIFO.scala 91:34]
-  wire  _T_5; // @[FIFO.scala 91:25]
-  wire  _T_8; // @[FIFO.scala 92:24]
-  wire  _T_9; // @[FIFO.scala 90:17]
+  wire [7:0] _T; // @[FIFO.scala 88:16]
+  wire [7:0] sel; // @[FIFO.scala 88:10]
+  wire  _T_2; // @[FIFO.scala 89:26]
+  wire  _T_3; // @[FIFO.scala 90:13]
+  wire  _T_4; // @[FIFO.scala 90:34]
+  wire  _T_5; // @[FIFO.scala 90:25]
+  wire  _T_8; // @[FIFO.scala 91:24]
+  wire  _T_9; // @[FIFO.scala 89:17]
   wire  _T_10; // @[Mux.scala 69:19]
   wire [6:0] _T_11; // @[Mux.scala 69:16]
   wire  _T_12; // @[Mux.scala 69:19]
@@ -294,20 +295,20 @@ module FIFODisplay(
   wire [6:0] _T_29; // @[Mux.scala 69:16]
   wire  _T_30; // @[Mux.scala 69:19]
   wire [6:0] _T_31; // @[Mux.scala 69:16]
-  wire [6:0] seg; // @[FIFO.scala 90:13]
-  wire  dp; // @[FIFO.scala 99:15]
+  wire [6:0] seg; // @[FIFO.scala 89:13]
+  wire  dp; // @[FIFO.scala 98:15]
   wire [8:0] _T_33; // @[Cat.scala 30:58]
-  wire  _T_36; // @[FIFO.scala 101:11]
-  wire [2:0] _T_38; // @[FIFO.scala 103:18]
-  wire [15:0] _T_40; // @[FIFO.scala 105:12]
-  assign _T = 8'h1 << addr; // @[FIFO.scala 89:16]
-  assign sel = ~ _T; // @[FIFO.scala 89:10]
-  assign _T_2 = io_tail >= io_head; // @[FIFO.scala 90:26]
-  assign _T_3 = addr >= io_head; // @[FIFO.scala 91:13]
-  assign _T_4 = addr < io_tail; // @[FIFO.scala 91:34]
-  assign _T_5 = _T_3 & _T_4; // @[FIFO.scala 91:25]
-  assign _T_8 = _T_4 | _T_3; // @[FIFO.scala 92:24]
-  assign _T_9 = _T_2 ? _T_5 : _T_8; // @[FIFO.scala 90:17]
+  wire  _T_36; // @[FIFO.scala 100:11]
+  wire [2:0] _T_38; // @[FIFO.scala 102:18]
+  wire [15:0] _T_40; // @[FIFO.scala 104:12]
+  assign _T = 8'h1 << addr; // @[FIFO.scala 88:16]
+  assign sel = ~ _T; // @[FIFO.scala 88:10]
+  assign _T_2 = io_tail >= io_head; // @[FIFO.scala 89:26]
+  assign _T_3 = addr >= io_head; // @[FIFO.scala 90:13]
+  assign _T_4 = addr < io_tail; // @[FIFO.scala 90:34]
+  assign _T_5 = _T_3 & _T_4; // @[FIFO.scala 90:25]
+  assign _T_8 = _T_4 | _T_3; // @[FIFO.scala 91:24]
+  assign _T_9 = _T_2 ? _T_5 : _T_8; // @[FIFO.scala 89:17]
   assign _T_10 = 4'hf == io_data; // @[Mux.scala 69:19]
   assign _T_11 = _T_10 ? 7'h7e : 7'h7f; // @[Mux.scala 69:16]
   assign _T_12 = 4'h9 == io_data; // @[Mux.scala 69:19]
@@ -330,14 +331,14 @@ module FIFODisplay(
   assign _T_29 = _T_28 ? 7'h4f : _T_27; // @[Mux.scala 69:16]
   assign _T_30 = 4'h0 == io_data; // @[Mux.scala 69:19]
   assign _T_31 = _T_30 ? 7'h1 : _T_29; // @[Mux.scala 69:16]
-  assign seg = _T_9 ? _T_31 : 7'h7f; // @[FIFO.scala 90:13]
-  assign dp = addr != io_head; // @[FIFO.scala 99:15]
+  assign seg = _T_9 ? _T_31 : 7'h7f; // @[FIFO.scala 89:13]
+  assign dp = addr != io_head; // @[FIFO.scala 98:15]
   assign _T_33 = {sel,dp}; // @[Cat.scala 30:58]
-  assign _T_36 = c >= 16'h270f; // @[FIFO.scala 101:11]
-  assign _T_38 = addr + 3'h1; // @[FIFO.scala 103:18]
-  assign _T_40 = c + 16'h1; // @[FIFO.scala 105:12]
-  assign io_addr = addr; // @[FIFO.scala 88:11]
-  assign io_output = {_T_33,seg}; // @[FIFO.scala 97:13]
+  assign _T_36 = c >= 16'h270f; // @[FIFO.scala 100:11]
+  assign _T_38 = addr + 3'h1; // @[FIFO.scala 102:18]
+  assign _T_40 = c + 16'h1; // @[FIFO.scala 104:12]
+  assign io_addr = addr; // @[FIFO.scala 87:11]
+  assign io_output = {_T_33,seg}; // @[FIFO.scala 96:13]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -379,13 +380,21 @@ initial begin
   `endif // RANDOMIZE
 end
   always @(posedge clock) begin
-    if (_T_36) begin
+    if (reset) begin
       c <= 16'h0;
     end else begin
-      c <= _T_40;
+      if (_T_36) begin
+        c <= 16'h0;
+      end else begin
+        c <= _T_40;
+      end
     end
-    if (_T_36) begin
-      addr <= _T_38;
+    if (reset) begin
+      addr <= 3'h0;
+    end else begin
+      if (_T_36) begin
+        addr <= _T_38;
+      end
     end
   end
 endmodule
@@ -455,24 +464,24 @@ module FIFO(
   output [3:0]  io_out,
   output        io_empty,
   output        io_full,
-  output [15:0] io_display,
-  input         io_CLK100MHZ
+  output [15:0] io_display
 );
-  wire  RegisterFile_clock; // @[FIFO.scala 23:17]
-  wire  RegisterFile_reset; // @[FIFO.scala 23:17]
-  wire [2:0] RegisterFile_io_ra0; // @[FIFO.scala 23:17]
-  wire [2:0] RegisterFile_io_ra1; // @[FIFO.scala 23:17]
-  wire [3:0] RegisterFile_io_rd0; // @[FIFO.scala 23:17]
-  wire [3:0] RegisterFile_io_rd1; // @[FIFO.scala 23:17]
-  wire [2:0] RegisterFile_io_wa0; // @[FIFO.scala 23:17]
-  wire [3:0] RegisterFile_io_wd0; // @[FIFO.scala 23:17]
-  wire  RegisterFile_io_we; // @[FIFO.scala 23:17]
-  wire  FIFODisplay_clock; // @[FIFO.scala 25:11]
-  wire [2:0] FIFODisplay_io_head; // @[FIFO.scala 25:11]
-  wire [2:0] FIFODisplay_io_tail; // @[FIFO.scala 25:11]
-  wire [2:0] FIFODisplay_io_addr; // @[FIFO.scala 25:11]
-  wire [3:0] FIFODisplay_io_data; // @[FIFO.scala 25:11]
-  wire [15:0] FIFODisplay_io_output; // @[FIFO.scala 25:11]
+  wire  RegisterFile_clock; // @[FIFO.scala 20:17]
+  wire  RegisterFile_reset; // @[FIFO.scala 20:17]
+  wire [2:0] RegisterFile_io_ra0; // @[FIFO.scala 20:17]
+  wire [2:0] RegisterFile_io_ra1; // @[FIFO.scala 20:17]
+  wire [3:0] RegisterFile_io_rd0; // @[FIFO.scala 20:17]
+  wire [3:0] RegisterFile_io_rd1; // @[FIFO.scala 20:17]
+  wire [2:0] RegisterFile_io_wa0; // @[FIFO.scala 20:17]
+  wire [3:0] RegisterFile_io_wd0; // @[FIFO.scala 20:17]
+  wire  RegisterFile_io_we; // @[FIFO.scala 20:17]
+  wire  FIFODisplay_clock; // @[FIFO.scala 21:23]
+  wire  FIFODisplay_reset; // @[FIFO.scala 21:23]
+  wire [2:0] FIFODisplay_io_head; // @[FIFO.scala 21:23]
+  wire [2:0] FIFODisplay_io_tail; // @[FIFO.scala 21:23]
+  wire [2:0] FIFODisplay_io_addr; // @[FIFO.scala 21:23]
+  wire [3:0] FIFODisplay_io_data; // @[FIFO.scala 21:23]
+  wire [15:0] FIFODisplay_io_output; // @[FIFO.scala 21:23]
   wire  Counter_clock; // @[Counter.scala 8:19]
   wire  Counter_reset; // @[Counter.scala 8:19]
   wire  Counter_io_ce; // @[Counter.scala 8:19]
@@ -481,14 +490,22 @@ module FIFO(
   wire  Counter_1_reset; // @[Counter.scala 8:19]
   wire  Counter_1_io_ce; // @[Counter.scala 8:19]
   wire [2:0] Counter_1_io_q; // @[Counter.scala 8:19]
-  wire  _T; // @[FIFO.scala 28:33]
-  wire  _T_1; // @[FIFO.scala 28:42]
-  wire  _T_2; // @[FIFO.scala 29:32]
-  wire  pop; // @[FIFO.scala 29:29]
-  reg [3:0] out; // @[FIFO.scala 33:20]
+  reg  push_en; // @[FIFO.scala 23:24]
   reg [31:0] _RAND_0;
-  wire [2:0] _T_5; // @[FIFO.scala 36:20]
-  RegisterFile RegisterFile ( // @[FIFO.scala 23:17]
+  reg  pop_en; // @[FIFO.scala 24:23]
+  reg [31:0] _RAND_1;
+  wire  _T; // @[FIFO.scala 25:28]
+  wire  _T_1; // @[FIFO.scala 25:44]
+  wire  _T_2; // @[FIFO.scala 25:53]
+  wire  _T_3; // @[FIFO.scala 26:26]
+  wire  _T_4; // @[FIFO.scala 26:42]
+  wire  pop; // @[FIFO.scala 26:39]
+  wire  _T_5; // @[FIFO.scala 27:14]
+  wire  _T_6; // @[FIFO.scala 28:13]
+  reg [3:0] out; // @[FIFO.scala 32:20]
+  reg [31:0] _RAND_2;
+  wire [2:0] _T_9; // @[FIFO.scala 35:20]
+  RegisterFile RegisterFile ( // @[FIFO.scala 20:17]
     .clock(RegisterFile_clock),
     .reset(RegisterFile_reset),
     .io_ra0(RegisterFile_io_ra0),
@@ -499,8 +516,9 @@ module FIFO(
     .io_wd0(RegisterFile_io_wd0),
     .io_we(RegisterFile_io_we)
   );
-  FIFODisplay FIFODisplay ( // @[FIFO.scala 25:11]
+  FIFODisplay FIFODisplay ( // @[FIFO.scala 21:23]
     .clock(FIFODisplay_clock),
+    .reset(FIFODisplay_reset),
     .io_head(FIFODisplay_io_head),
     .io_tail(FIFODisplay_io_tail),
     .io_addr(FIFODisplay_io_addr),
@@ -519,32 +537,37 @@ module FIFO(
     .io_ce(Counter_1_io_ce),
     .io_q(Counter_1_io_q)
   );
-  assign _T = io_full == 1'h0; // @[FIFO.scala 28:33]
-  assign _T_1 = _T | io_en_out; // @[FIFO.scala 28:42]
-  assign _T_2 = io_empty == 1'h0; // @[FIFO.scala 29:32]
-  assign pop = io_en_out & _T_2; // @[FIFO.scala 29:29]
-  assign _T_5 = Counter_1_io_q + 3'h1; // @[FIFO.scala 36:20]
-  assign io_out = out; // @[FIFO.scala 37:10]
-  assign io_empty = Counter_io_q == Counter_1_io_q; // @[FIFO.scala 35:12]
-  assign io_full = _T_5 == Counter_io_q; // @[FIFO.scala 36:11]
-  assign io_display = FIFODisplay_io_output; // @[FIFO.scala 49:14]
+  assign _T = push_en & io_en_in; // @[FIFO.scala 25:28]
+  assign _T_1 = io_full == 1'h0; // @[FIFO.scala 25:44]
+  assign _T_2 = _T_1 | io_en_out; // @[FIFO.scala 25:53]
+  assign _T_3 = pop_en & io_en_out; // @[FIFO.scala 26:26]
+  assign _T_4 = io_empty == 1'h0; // @[FIFO.scala 26:42]
+  assign pop = _T_3 & _T_4; // @[FIFO.scala 26:39]
+  assign _T_5 = io_en_in == 1'h0; // @[FIFO.scala 27:14]
+  assign _T_6 = io_en_out == 1'h0; // @[FIFO.scala 28:13]
+  assign _T_9 = Counter_1_io_q + 3'h1; // @[FIFO.scala 35:20]
+  assign io_out = out; // @[FIFO.scala 36:10]
+  assign io_empty = Counter_io_q == Counter_1_io_q; // @[FIFO.scala 34:12]
+  assign io_full = _T_9 == Counter_io_q; // @[FIFO.scala 35:11]
+  assign io_display = FIFODisplay_io_output; // @[FIFO.scala 48:14]
   assign RegisterFile_clock = clock;
   assign RegisterFile_reset = reset;
-  assign RegisterFile_io_ra0 = Counter_io_q; // @[FIFO.scala 39:9]
-  assign RegisterFile_io_ra1 = FIFODisplay_io_addr; // @[FIFO.scala 47:9]
-  assign RegisterFile_io_wa0 = Counter_1_io_q; // @[FIFO.scala 40:9]
-  assign RegisterFile_io_wd0 = io_in; // @[FIFO.scala 41:9]
-  assign RegisterFile_io_we = io_en_in & _T_1; // @[FIFO.scala 42:8]
-  assign FIFODisplay_clock = io_CLK100MHZ;
-  assign FIFODisplay_io_head = Counter_io_q; // @[FIFO.scala 45:16]
-  assign FIFODisplay_io_tail = Counter_1_io_q; // @[FIFO.scala 46:16]
-  assign FIFODisplay_io_data = RegisterFile_io_rd1; // @[FIFO.scala 48:16]
+  assign RegisterFile_io_ra0 = Counter_io_q; // @[FIFO.scala 38:9]
+  assign RegisterFile_io_ra1 = FIFODisplay_io_addr; // @[FIFO.scala 46:9]
+  assign RegisterFile_io_wa0 = Counter_1_io_q; // @[FIFO.scala 39:9]
+  assign RegisterFile_io_wd0 = io_in; // @[FIFO.scala 40:9]
+  assign RegisterFile_io_we = _T & _T_2; // @[FIFO.scala 41:8]
+  assign FIFODisplay_clock = clock;
+  assign FIFODisplay_reset = reset;
+  assign FIFODisplay_io_head = Counter_io_q; // @[FIFO.scala 44:16]
+  assign FIFODisplay_io_tail = Counter_1_io_q; // @[FIFO.scala 45:16]
+  assign FIFODisplay_io_data = RegisterFile_io_rd1; // @[FIFO.scala 47:16]
   assign Counter_clock = clock;
   assign Counter_reset = reset;
-  assign Counter_io_ce = io_en_out & _T_2; // @[Counter.scala 9:10]
+  assign Counter_io_ce = _T_3 & _T_4; // @[Counter.scala 9:10]
   assign Counter_1_clock = clock;
   assign Counter_1_reset = reset;
-  assign Counter_1_io_ce = io_en_in & _T_1; // @[Counter.scala 9:10]
+  assign Counter_1_io_ce = _T & _T_2; // @[Counter.scala 9:10]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -577,11 +600,29 @@ initial begin
     `endif
   `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  out = _RAND_0[3:0];
+  push_en = _RAND_0[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_1 = {1{`RANDOM}};
+  pop_en = _RAND_1[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_2 = {1{`RANDOM}};
+  out = _RAND_2[3:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end
   always @(posedge clock) begin
+    if (reset) begin
+      push_en <= 1'h1;
+    end else begin
+      push_en <= _T_5;
+    end
+    if (reset) begin
+      pop_en <= 1'h1;
+    end else begin
+      pop_en <= _T_6;
+    end
     if (reset) begin
       out <= 4'h0;
     end else begin
