@@ -7,7 +7,6 @@ set_property -dict { PACKAGE_PIN M13   IOSTANDARD LVCMOS33 } [get_ports { io_in[
 set_property -dict { PACKAGE_PIN R15   IOSTANDARD LVCMOS33 } [get_ports { io_in[3] }]; #IO_L13N_T2_MRCC_14 Sch=sw[3]
 set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { io_en_in }]; #IO_L12N_T1_MRCC_14 Sch=sw[4]
 set_property -dict { PACKAGE_PIN T18   IOSTANDARD LVCMOS33 } [get_ports { io_en_out }]; #IO_L7N_T1_D10_14 Sch=sw[5]
-set_property -dict { PACKAGE_PIN U11   IOSTANDARD LVCMOS33 } [get_ports { clock }]; #IO_L19N_T3_A09_D25_VREF_14 Sch=sw[14]
 set_property -dict { PACKAGE_PIN V10   IOSTANDARD LVCMOS33 } [get_ports { reset }]; #IO_L21P_T3_DQS_14 Sch=sw[15]
 
 set_property -dict { PACKAGE_PIN H17   IOSTANDARD LVCMOS33 } [get_ports { io_out[0] }]; #IO_L18P_T2_A24_15 Sch=led[0]
