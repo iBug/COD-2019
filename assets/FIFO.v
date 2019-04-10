@@ -53,6 +53,7 @@ module FIFO (
             tail <= 0;
             scan_a <= 0;
             scan_n <= 0;
+            out <= 0;
         end else begin
             prev_in <= en_in;
             prev_out <= en_out;
