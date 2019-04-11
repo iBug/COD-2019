@@ -31,6 +31,7 @@ class Painter extends Module {
   io.vs := vga.vs
   val rx = Wire(UInt(8.W))
   val ry = Wire(UInt(8.W))
+  val re = Wire(Bool())
   val rd = Mux(re, vram.rd, 0.U(12.W))
   vram.ra := (ry << 8.U) | rx
   vram.wa := (y << 8.U) | x
@@ -38,6 +39,7 @@ class Painter extends Module {
   vram.we := io.de
   rx := vga.x - ((640 - 256) / 2).U
   ry := vga.y - ((480 - 256) / 2).U
+  re := (vga.x >= ((640 - 256) / 2).U) && (vga.x < ((640 + 256) / 2).U) && (vga.y >= ((480 - 256) / 2).U) && (vga.y < ((480 + 256) / 2).U)
   io.vr := rd(11, 8)
   io.vg := rd(7, 4)
   io.vb := rd(3, 0)
