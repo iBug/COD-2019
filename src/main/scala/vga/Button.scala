@@ -6,7 +6,7 @@ import chisel3.util._
 import alu.Register
 
 object Button {
-  def apply(val i: Bool, val te: Int = 50000000, val tr: Int = 2500000): Bool = {
+  def apply(i: Bool, te: Int = 50000000, tr: Int = 2500000): Bool = {
     val m = Module(new Button(te, tr)).io
     m.i := i
     m.o

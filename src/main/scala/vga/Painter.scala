@@ -20,18 +20,18 @@ class Painter extends Module {
 
   val x = RegInit(127.U(8.W))
   val y = RegInit(127.U(8.W))
-  val mu = Button(io.btn(0)
-  val mr = Button(io.btn(1)
-  val md = Button(io.btn(2)
-  val ml = Button(io.btn(3)
+  val mu = Button(io.btn(0))
+  val mr = Button(io.btn(1))
+  val md = Button(io.btn(2))
+  val ml = Button(io.btn(3))
 
   val vram = Module(new VRAM()).io
-  val vga = Module(new VRAM()).io
+  val vga = Module(new VGA()).io
   io.hs := vga.hs
   io.vs := vga.vs
   val rx = Wire(UInt(8.W))
   val ry = Wire(UInt(8.W))
-  val rd := Mux(re, vram.rd, 0.U(12.W))
+  val rd = Mux(re, vram.rd, 0.U(12.W))
   vram.ra := (ry << 8.U) | rx
   vram.wa := (y << 8.U) | x
   vram.wd := io.sw
