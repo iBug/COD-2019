@@ -25,8 +25,8 @@ class VGA(val hd: Int = 640, val hf: Int = 16, val hs: Int = 96, val hb: Int = 4
   io.en := (HD < hd.U) && (VD < vd.U)
   io.x := Mux(io.en, HD, 0.U)
   io.y := Mux(io.en, VD, 0.U)
-  io.hs := (HD >= (hd + hf).U) && (HD < (hd + hf + hs).U)
-  io.vs := (VD >= (vd + vf).U) && (VD < (vd + vf + vs).U)
+  io.hs := ~((HD >= (hd + hf).U) && (HD < (hd + hf + hs).U))
+  io.vs := ~((VD >= (vd + vf).U) && (VD < (vd + vf + vs).U))
 
   when (PE) {
     when (HD >= (hm - 1).U) {
