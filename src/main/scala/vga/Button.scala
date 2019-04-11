@@ -5,6 +5,14 @@ import chisel3.util._
 
 import alu.Register
 
+object Button {
+  def apply(val i: Bool, val te: Int = 50000000, val tr: Int = 2500000): Bool = {
+    val m = Module(new Button(te, tr)).io
+    m.i := i
+    m.o
+  }
+}
+
 class Button(val tEnable: Int = 50000000, val tRepeat: Int = 2500000) extends Module {
   val io = IO(new Bundle {
     val i = Input(Bool())
