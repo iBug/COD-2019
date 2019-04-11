@@ -6,6 +6,7 @@ import alu.util._
 import fsm._
 import reg._
 import reg.util.FIFO
+import vga.Painter
 
 object Main extends App {
   var Args: Array[String] = args
@@ -16,6 +17,7 @@ object Main extends App {
   ALUMain.main(Args)
   FSMMain.main(Args)
   RegMain.main(Args)
+  VGAMain.main(Args)
 }
 
 object ALUMain extends App {
@@ -32,4 +34,8 @@ object FSMMain extends App {
 object RegMain extends App {
   chisel3.Driver.execute(args, () => new RegisterFile(2, 4))
   chisel3.Driver.execute(args, () => new FIFO(4, 3))
+}
+
+object VGAMain extends App {
+  chisel3.Driver.execute(args, () => new Painter())
 }
