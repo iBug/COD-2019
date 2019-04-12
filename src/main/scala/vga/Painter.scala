@@ -18,12 +18,15 @@ class Painter(val w: Int = 256, val h: Int = 256, val dw: Int = 640, val dh: Int
     val vb = Output(UInt(4.W))
   })
 
+  val cRepeat = RegInit(0.U(32.W))
+  val repeat = cRepeat === 0.U
+
   val x = RegInit(((w - 1) / 2).U(log2Ceil(w).W))
   val y = RegInit(((h - 1) / 2).U(log2Ceil(h).W))
-  val mu = Button(io.btn(0))
-  val mr = Button(io.btn(1))
-  val md = Button(io.btn(2))
-  val ml = Button(io.btn(3))
+  val mu = Button(io.btn(0), repeat)
+  val mr = Button(io.btn(1), repeat)
+  val md = Button(io.btn(2), repeat)
+  val ml = Button(io.btn(3), repeat)
 
   val vram = Module(new VRAM()).io
   val vga = Module(new VGA()).io
@@ -57,5 +60,10 @@ class Painter(val w: Int = 256, val h: Int = 256, val dw: Int = 640, val dh: Int
   }
   when (x > 0.U && ml) {
     x := x - 1.U
+  }
+  when (cRepeat >= 2499999.U) {
+    cRepeat := 0.U
+  } .otherwise {
+    cRepeat := cRepeat + 1.U
   }
 }
