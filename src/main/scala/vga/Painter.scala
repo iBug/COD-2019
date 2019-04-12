@@ -34,7 +34,7 @@ class Painter(val w: Int = 256, val h: Int = 256, val dw: Int = 640, val dh: Int
   val rx = Wire(UInt(8.W))
   val ry = Wire(UInt(8.W))
   val re = Wire(Bool())
-  val rd = Mux(re, vram.rd, 0.U(12.W))
+  val rd = Mux(re, Mux((rx =/= x || ry =/= y), vram.rd, 0xFFF.U(12.W)), 0.U(12.W))
   vram.ra := (ry << 8.U) | rx
   vram.wa := (y << 8.U) | x
   vram.wd := io.sw
