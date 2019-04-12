@@ -5,7 +5,7 @@ import chisel3.util._
 
 import alu.Register
 
-class Painter extends Module {
+class Painter(val w: Int = 256, val h: Int = 256, val dw: Int = 640, val dh: Int = 480) extends Module {
   val io = IO(new Bundle {
     val btn = Input(UInt(4.W))
     // 0123 = URDL
@@ -18,8 +18,8 @@ class Painter extends Module {
     val vb = Output(UInt(4.W))
   })
 
-  val x = RegInit(127.U(8.W))
-  val y = RegInit(127.U(8.W))
+  val x = RegInit(((w - 1) / 2).U(log2Ceil(w).W))
+  val y = RegInit(((h - 1) / 2).U(log2Ceil(h).W))
   val mu = Button(io.btn(0))
   val mr = Button(io.btn(1))
   val md = Button(io.btn(2))
@@ -39,9 +39,9 @@ class Painter extends Module {
   vram.wa := (y << 8.U) | x
   vram.wd := io.sw
   vram.we := io.de
-  rx := vga.x - ((640 - 256) / 2).U
-  ry := vga.y - ((480 - 256) / 2).U
-  re := (vga.x >= ((640 - 256) / 2).U) && (vga.x < ((640 + 256) / 2).U) && (vga.y >= ((480 - 256) / 2).U) && (vga.y < ((480 + 256) / 2).U)
+  rx := vga.x - ((dw - w) / 2).U
+  ry := vga.y - ((dh - h) / 2).U
+  re := (vga.x >= ((dw - w) / 2).U) && (vga.x < ((dw + w) / 2).U) && (vga.y >= ((dh - h) / 2).U) && (vga.y < ((dh + h) / 2).U)
   io.vr := rd(11, 8)
   io.vg := rd(7, 4)
   io.vb := rd(3, 0)
@@ -49,10 +49,10 @@ class Painter extends Module {
   when (y > 0.U && mu) {
     y := y - 1.U
   }
-  when (x < 255.U && mr) {
+  when (x < (w - 1).U && mr) {
     x := x + 1.U
   }
-  when (y < 255.U && md) {
+  when (y < (h - 1).U && md) {
     y := y + 1.U
   }
   when (x > 0.U && ml) {
