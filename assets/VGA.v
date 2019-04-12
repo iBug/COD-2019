@@ -33,12 +33,12 @@ module VGA (
         end else if (ce) begin
             if (hc >= HD + HF + HS + HB - 1)
                 hc <= 0;
-            else begin
-                hc <= hc + 1;
                 if (vc >= VD + VF + VS + VB - 1)
                     vc <= 0;
                 else
                     vc <= vc + 1;
+            else begin
+                hc <= hc + 1;
             end
         end
     end
