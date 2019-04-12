@@ -27,7 +27,8 @@ class Painter extends Module {
 
   val vram = Module(new VRAM()).io
   val vga = Module(new VGA()).io
-  vga.clock := clock
+  // vga.clock := clock
+  vram.clock := clock
   io.hs := vga.hs
   io.vs := vga.vs
   val rx = Wire(UInt(8.W))
