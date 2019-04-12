@@ -50,4 +50,3 @@ general:
   branches:
     only:
       - master
-      - labs
