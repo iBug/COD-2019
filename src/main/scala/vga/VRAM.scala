@@ -5,6 +5,7 @@ import chisel3.util._
 
 import alu.Register
 
+// Use VRAMAdapter.v from assets
 class VRAM(val wAddr: Int = 16, val wData: Int = 12) extends BlackBox {
   val io = IO(new Bundle {
     val clock = Input(Clock())
