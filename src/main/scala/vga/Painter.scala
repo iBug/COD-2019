@@ -37,14 +37,14 @@ class Painter(val w: Int = 256, val h: Int = 256, val dw: Int = 640, val dh: Int
   val ry = Wire(UInt(8.W))
   val re = Wire(Bool())
   val rd = Mux(re,
-    Mux((rx =/= x || ry =/= y), vram.rd, 0xFFF.U(12.W)),
+    Mux((rx =/= x || ry =/= y), ~vram.rd, 0xFFF.U(12.W)),
     Mux(
       (vga.y >= ((dh - h) / 2 - 2).U && vga.y <= ((dh + h) / 2 + 1).U && (vga.x === ((dw - w) / 2 - 2).U || vga.x === ((dw + w) / 2 + 1).U)) || (vga.x >= ((dw - w) / 2 - 2).U && vga.x <= ((dw + w) / 2 + 1).U && (vga.y === ((dh - h) / 2 - 2).U || vga.y === ((dh + h) / 2 + 1).U)),
       0xFFF.U(12.W), 0.U(12.W))
   )
   vram.ra := (ry << 8.U) | rx
   vram.wa := (y << 8.U) | x
-  vram.wd := io.sw
+  vram.wd := ~io.sw
   vram.we := io.de
   rx := vga.x - ((dw - w) / 2).U
   ry := vga.y - ((dh - h) / 2).U
