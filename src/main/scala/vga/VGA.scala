@@ -3,7 +3,7 @@ package vga
 import chisel3._
 import chisel3.util._
 
-class VGA(val hd: Int = 640, val hf: Int = 16, val hs: Int = 96, val hb: Int = 48, val vd: Int = 480, val vf: Int = 10, val vs: Int = 2, val vb: Int = 31, val w: Int = 16, val cd: Int = 16384, val cw: Int = 16) extends Module {
+class VGA(val hd: Int = 640, val hf: Int = 16, val hs: Int = 96, val hb: Int = 48, val vd: Int = 480, val vf: Int = 10, val vs: Int = 2, val vb: Int = 33, val w: Int = 16, val cd: Int = 16384, val cw: Int = 16) extends Module {
   val io = IO(new Bundle {
     val hs = Output(Bool())
     val vs = Output(Bool())
