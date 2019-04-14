@@ -6,7 +6,7 @@ module VGA (
     output [15:0] x, y
 );
     parameter HD = 640, HF = 16, HS = 96, HB = 48;
-    parameter VD = 480, VF = 10, VS = 2, VB = 31;
+    parameter VD = 480, VF = 10, VS = 2, VB = 33;
 
     reg ce;
     reg [15:0] count;
@@ -31,13 +31,13 @@ module VGA (
             hc <= 0;
             vc <= 0;
         end else if (ce) begin
-            if (hc >= HD + HF + HS + HB - 1)
+            if (hc >= HD + HF + HS + HB - 1) begin
                 hc <= 0;
                 if (vc >= VD + VF + VS + VB - 1)
                     vc <= 0;
                 else
                     vc <= vc + 1;
-            else begin
+            end else begin
                 hc <= hc + 1;
             end
         end
