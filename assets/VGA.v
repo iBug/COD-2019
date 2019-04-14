@@ -6,7 +6,7 @@ module VGA (
     output [15:0] x, y
 );
     parameter HD = 640, HF = 16, HS = 96, HB = 48;
-    parameter VD = 480, VF = 10, VS = 2, VB = 33;
+    parameter VD = 480, VF = 10, VS = 2, VB = 31;
 
     reg ce;
     reg [15:0] count;
