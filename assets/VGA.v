@@ -22,7 +22,7 @@ module VGA (
         if (rst)
             {ce, count} <= 0;
         else
-            {ce, count} <= count + 16'h4000;
+            {ce, count} <= count + 17'h4000;
     end
 
     // VGA Scanner
