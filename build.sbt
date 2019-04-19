@@ -18,6 +18,9 @@ name := "COD-2019 by iBug"
 
 version := "2019.2.26.0"
 
+mainClass in (Compile, run) := Some("Main")
+mainClass in (test) := Some("Main")
+
 scalaVersion := "2.12.8"
 
 crossScalaVersions := Seq("2.11.12", "2.12.8")
