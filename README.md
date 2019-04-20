@@ -6,7 +6,7 @@ Computer Organization and Design course of 2019
 
 ## Give me Verilog
 
-Run `runMain Main` in SBT. By default, Verilog will be output to `target/` directory.
+Run `run` in SBT, or `sbt run` in your shell. By default, Verilog will be output to `target/` directory. You can override this with `sbt 'run -td <target directory>'`.
 
 ### I don't have Scala build environment
 
