@@ -28,8 +28,8 @@ class Painter(val w: Int = 256, val h: Int = 256, val dw: Int = 640, val dh: Int
   val md = Button(io.btn(2), repeat)
   val ml = Button(io.btn(3), repeat)
 
-  val vram = Module(new VRAM()).io
-  val vga = Module(new VGA()).io
+  val vram = Module(new VRAM).io
+  val vga = Module(new VGA).io
   vram.clock := clock // BlackBox doesn't have implicit clock and reset
   io.hs := vga.hs
   io.vs := vga.vs

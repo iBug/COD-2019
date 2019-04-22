@@ -37,5 +37,5 @@ object RegMain extends App {
 }
 
 object VGAMain extends App {
-  chisel3.Driver.execute(args, () => new Painter())
+  chisel3.Driver.execute(args, () => new Painter)
 }
